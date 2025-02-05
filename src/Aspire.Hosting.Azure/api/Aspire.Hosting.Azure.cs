@@ -67,7 +67,13 @@ namespace Aspire.Hosting
     {
         public static ApplicationModel.IResourceBuilder<Azure.AzureProvisioningResource> AddAzureInfrastructure(this IDistributedApplicationBuilder builder, string name, System.Action<Azure.AzureResourceInfrastructure> configureInfrastructure) { throw null; }
 
+        public static global::Azure.Provisioning.ProvisioningParameter AsProvisioningParameter(this ApplicationModel.EndpointReference endpointReference, Azure.AzureResourceInfrastructure infrastructure, string parameterName) { throw null; }
+
         public static global::Azure.Provisioning.ProvisioningParameter AsProvisioningParameter(this ApplicationModel.IResourceBuilder<ApplicationModel.ParameterResource> parameterResourceBuilder, Azure.AzureResourceInfrastructure infrastructure, string? parameterName = null) { throw null; }
+
+        public static global::Azure.Provisioning.ProvisioningParameter AsProvisioningParameter(this ApplicationModel.ParameterResource parameterResource, Azure.AzureResourceInfrastructure infrastructure, string? parameterName = null) { throw null; }
+
+        public static global::Azure.Provisioning.ProvisioningParameter AsProvisioningParameter(this ApplicationModel.ReferenceExpression expression, Azure.AzureResourceInfrastructure infrastructure, string parameterName) { throw null; }
 
         public static global::Azure.Provisioning.ProvisioningParameter AsProvisioningParameter(this Azure.BicepOutputReference outputReference, Azure.AzureResourceInfrastructure infrastructure, string? parameterName = null) { throw null; }
 
@@ -109,6 +115,8 @@ namespace Aspire.Hosting.Azure
 
         public System.Threading.Tasks.TaskCompletionSource? ProvisioningTaskCompletionSource { get { throw null; } set { } }
 
+        public AzureBicepResourceScope? Scope { get { throw null; } set { } }
+
         public System.Collections.Generic.Dictionary<string, string?> SecretOutputs { get { throw null; } }
 
         public virtual BicepTemplateFile GetBicepTemplateFile(string? directory = null, bool deleteTemporaryFileOnDispose = true) { throw null; }
@@ -133,6 +141,13 @@ namespace Aspire.Hosting.Azure
         public AzureBicepResourceAnnotation(AzureBicepResource resource) { }
 
         public AzureBicepResource Resource { get { throw null; } }
+    }
+
+    public sealed partial class AzureBicepResourceScope
+    {
+        public AzureBicepResourceScope(object resourceGroup) { }
+
+        public object ResourceGroup { get { throw null; } }
     }
 
     public sealed partial class AzureProvisioningOptions
@@ -203,6 +218,26 @@ namespace Aspire.Hosting.Azure
         public string Path { get { throw null; } }
 
         public readonly void Dispose() { }
+    }
+
+    public sealed partial class ExistingAzureResourceAnnotation : ApplicationModel.IResourceAnnotation
+    {
+        public ExistingAzureResourceAnnotation(ApplicationModel.ParameterResource nameParameter, ApplicationModel.ParameterResource? resourceGroupParameter = null) { }
+
+        public ApplicationModel.ParameterResource NameParameter { get { throw null; } }
+
+        public ApplicationModel.ParameterResource? ResourceGroupParameter { get { throw null; } }
+    }
+
+    public static partial class ExistingAzureResourceExtensions
+    {
+        public static bool IsExisting(this ApplicationModel.IResource resource) { throw null; }
+
+        public static ApplicationModel.IResourceBuilder<T> PublishAsExisting<T>(this ApplicationModel.IResourceBuilder<T> builder, ApplicationModel.IResourceBuilder<ApplicationModel.ParameterResource> nameParameter, ApplicationModel.IResourceBuilder<ApplicationModel.ParameterResource>? resourceGroupParameter = null)
+            where T : ApplicationModel.IAzureResource { throw null; }
+
+        public static ApplicationModel.IResourceBuilder<T> RunAsExisting<T>(this ApplicationModel.IResourceBuilder<T> builder, ApplicationModel.IResourceBuilder<ApplicationModel.ParameterResource> nameParameter, ApplicationModel.IResourceBuilder<ApplicationModel.ParameterResource>? resourceGroupParameter = null)
+            where T : ApplicationModel.IAzureResource { throw null; }
     }
 
     public partial interface IResourceWithAzureFunctionsConfig : ApplicationModel.IResource
